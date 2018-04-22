@@ -2,7 +2,7 @@
 <html >
 <head>
 	<meta charset="utf-8"/>
-	<title>Book-A-Meal | Menu</title>
+	<title>Book-A-Meal | Order</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -14,38 +14,10 @@
 					<div class="display-table-cell vertical-align-middle text-align-right padding-all-3">
 						<a class="font-size-6 font-weight4 hover-white no-underline white-70 display-inline-block margin-left-2 padding-vertical-2 padding-horizontal-3 background-all" href="./index.html" 
 						id="signout">Sign Out</a> 
-						<a class="font-size-6 font-weight4 hover-white no-underline white-70 display-inline-block margin-left-2 padding-vertical-2 padding-horizontal-3 background-all" href="./meals.html" 
-						id="meals">Meals</a> 
 					</div>
 
 				</nav> 
-				<!-- The menu form-->
 				
-
-				<form action="#" class="background-white">
-					<div class="container">
-						<h1>Add Meals to Menu</h1>
-						<hr>
-						<label for="meal"><b>Meal</b></label>
-						<select class="width-100" type="text"  name="meal1" required>
-							<option value="">---First Meal----</option>
-							<option value="Rice">Rice</option>
-							<option value="Ugali">Ugali</option>
-							<option value="Potatos">Potatos</option>
-						</select> 
-						<select class="width-100" type="text"  name="meal2" required>
-							<option value="">---Second Meal---</option>
-							<option value="Tender Goat">Tender Goat</option>
-							<option value="Chicken">Chicken</option>
-							<option value="Beef">Beef</option>
-						</select> 
-						<div class="clearfix">
-							<button type="button" class="cancelbtn">Cancel</button>
-							<button type="submit" class="signupbtn">Submit</button>
-						</div>
-					</div>
-				</form> 
-
 				
 				<div class="padding-all-4 background-white">
 					<div class="overflow-auto">
@@ -54,42 +26,55 @@
 								<tr>
 									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">Meal</th>
 									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">Price</th>
-									
+									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">Count</th>
+									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">Select</th>
 								</tr>
 							</thead>
 							<tbody class="line-height-copy">
 								<tr>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Ugali and tender goat</td>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">450</td>
-									
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="number" name="count_order"></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="checkbox" name="selected_order"></td>
 								</tr>
 								<tr>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Potatos and Beef</td>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">400</td>
-
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="number" name="count_order"></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="checkbox" name="selected_order"></td>
 								</tr>
 								<tr>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Rice and Beef</td>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">450</td>
-									
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="number" name="count_order"></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="checkbox" name="selected_order"></td>
 								</tr>
 								<tr>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Ugali and Chicken</td>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">500</td>
-									
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="number" name="count_order"></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="checkbox" name="selected_order"></td>
 								</tr>
 								<tr>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Rice and Chicken</td>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">550</td>
-									
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="number" name="count_order"></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="checkbox" name="selected_order"></td>
 								</tr>
 								<tr>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Rice and tender goat</td>
 									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">600</td>
-									
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="number" name="count_order"></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><input type="checkbox" name="selected_order"></td>
 								</tr>
+
 							</tbody>
+
 						</table>
+						<div class="clearfix width-100">
+							<button type="button" class="cancelbtn">Cancel</button>
+							<button type="submit" class="signupbtn">Submit</button>
+						</div>
 					</div>
 				</div>
 			</div>
