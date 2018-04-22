@@ -1,0 +1,454 @@
+/*Creation of modular classes that can be used in multiple elements*/
+
+.border-box {
+	box-sizing: border-box;
+}
+
+.cover {
+	background-size: cover !important;
+}
+
+.background-left {
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+.background-all {
+	border-style: solid;
+	border-width: 1px;
+}
+
+.border-white {
+	border-color: #fff;
+}
+
+.border-white-90 {
+	border-color: rgba(255, 255, 255, 0.9);
+}
+
+.border-blue {
+	border-color: #408bc9;
+}
+
+.display-none {
+	display: none;
+}
+
+.display-inline-block {
+	display: inline-block;
+}
+
+.display-table {
+	display: table;
+}
+
+.display-table-cell {
+	display: table-cell;
+}
+
+.sans-serif {
+	font-family: -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica,
+		ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;
+}
+
+.font-weight1 {
+	font-weight: 100;
+}
+
+.font-weight2 {
+	font-weight: 200;
+}
+
+.font-weight4 {
+	font-weight: 400;
+}
+
+.font-weight6 {
+	font-weight: 600;
+}
+
+.line-height-title {
+	line-height: 1.25;
+}
+
+.link {
+	text-decoration: none;
+	transition: color 0.15s ease-in;
+}
+
+.link:link,
+.link:visited {
+	transition: color 0.15s ease-in;
+}
+
+.link:hover {
+	transition: color 0.15s ease-in;
+}
+
+.link:active {
+	transition: color 0.15s ease-in;
+}
+
+.link:focus {
+	transition: color 0.15s ease-in;
+	outline: 1px dotted currentColor;
+}
+
+.max-width-8 {
+	max-width: 64rem;
+}
+
+.width-80 {
+	width: 80%;
+}
+
+.width-100 {
+	width: 100%;
+}
+
+.height-100 {
+	height: 100%;
+}
+
+.white-90 {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.white-80 {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.white-70 {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.white {
+	color: #fff;
+}
+.black {
+	color: black;
+}
+
+.background-black-80 {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.background-blue {
+	background-color: #408bc9;
+}
+
+.background-white {
+	background-color: white;
+}
+
+.background-red {
+	background-color: red;
+}
+
+.hover-white:hover {
+	color: #fff;
+}
+
+.hover-white:focus {
+	color: #fff;
+}
+.border-pill {
+	border-radius: 9999px;
+}
+
+.border-bottom {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.border-black-20 {
+	border-color: rgba(0, 0, 0, 0.2);
+}
+
+.line-height-copy {
+	line-height: 1.5;
+}
+
+.padding-right-3 {
+	padding-right: 1rem;
+}
+
+.padding-bottom-3 {
+	padding-bottom: 1rem;
+}
+
+.padding-vertical-3 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.text-align-left {
+	text-align: left;
+}
+
+.padding-all-4 {
+	padding: 2rem;
+}
+
+.padding-all-3 {
+	padding: 1rem;
+}
+.padding-top-6 {
+	padding-top: 8rem;
+}
+
+.padding-bottom-5 {
+	padding-bottom: 4rem;
+}
+
+.padding-vertical-2 {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.padding-horizontal-3 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.margin-auto {
+	margin: auto;
+}
+
+.margin-left-2 {
+	margin-left: 0.5rem;
+}
+.margin-left-0 {
+	margin-left: 0;
+}
+.margin-right-0 {
+	margin-right: 0;
+}
+
+.margin-bottom-0 {
+	margin-bottom: 0;
+}
+.margin-top-0 {
+	margin-top: 0;
+}
+
+.margin-bottom-3 {
+	margin-bottom: 1rem;
+}
+.margin-bottom-2 {
+	margin-bottom: 0.5rem;
+}
+
+.margin-bottom-4 {
+	margin-bottom: 2rem;
+}
+
+.margin-top-3 {
+	margin-top: 1rem;
+}
+
+.margin-top-4 {
+	margin-top: 2rem;
+}
+
+.no-underline {
+	text-decoration: none;
+}
+
+.text-align-right {
+	text-align: right;
+}
+
+.font-size-2 {
+	font-size: 2.25rem;
+}
+
+.font-size-3 {
+	font-size: 1.5rem;
+}
+
+.font-size-6 {
+	font-size: 0.875rem;
+}
+
+.center {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.vertical-align-middle {
+	vertical-align: middle;
+}
+
+.grow {
+	-moz-osx-font-smoothing: grayscale;
+	backface-visibility: hidden;
+	transform: translateZ(0);
+	transition: transform 0.25s ease-out;
+}
+
+.grow:hover,
+.grow:focus {
+	transform: scale(1.05);
+}
+
+.grow:active {
+	transform: scale(0.9);
+}
+
+.grow-large {
+	-moz-osx-font-smoothing: grayscale;
+	backface-visibility: hidden;
+	transform: translateZ(0);
+	transition: transform 0.25s ease-in-out;
+}
+
+.grow-large:hover,
+.grow-large:focus {
+	transform: scale(1.2);
+}
+
+.grow-large:active {
+	transform: scale(0.95);
+}
+
+@media screen and (min-width: 30em) and (max-width: 60em) {
+	.padding-bottom-6-medium {
+		padding-bottom: 8rem;
+	}
+
+	.margin-top-5-medium {
+		margin-top: 4rem;
+	}
+}
+
+@media screen and (min-width: 60em) {
+	.background-center-large {
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	.padding-bottom-7-large {
+		padding-bottom: 16rem;
+	}
+
+	.margin-top-6-large {
+		margin-top: 8rem;
+	}
+
+	.text-align-centre-large {
+		text-align: center;
+	}
+
+	.font-size-1-large {
+		font-size: 3rem;
+	}
+}
+
+.position-fixed {
+	position: fixed;
+}
+.overflow-auto {
+	overflow: auto;
+}
+
+.float-right {
+	float: right;
+}
+
+.font-weight-bold {
+	font-weight: bold;
+}
+
+.modal {
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+* {
+	box-sizing: border-box;
+}
+
+/* Full-width input fields */
+input[type='text'],
+input[type='password'] {
+	padding: 15px;
+	margin: 5px 0 22px 0;
+	display: inline-block;
+	border: none;
+	background: #f1f1f1;
+}
+
+input[type='text']:focus,
+input[type='password']:focus {
+	background-color: #ddd;
+	outline: none;
+}
+
+hr {
+	border: 1px solid #f1f1f1;
+	margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+	background-color: #4caf50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
+}
+
+button:hover {
+	opacity: 1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+	padding: 14px 20px;
+	background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn,
+.signupbtn {
+	float: left;
+	width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+	padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+	content: '';
+	clear: both;
+	display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+	.cancelbtn,
+	.signupbtn {
+		width: 100%;
+	}
+}
