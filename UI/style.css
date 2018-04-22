@@ -63,6 +63,10 @@
 	font-weight: 400;
 }
 
+.font-weight6 {
+	font-weight: 600;
+}
+
 .line-height-title {
 	line-height: 1.25;
 }
@@ -133,12 +137,46 @@
 	background-color: #408bc9;
 }
 
+.background-white {
+	background-color: white;
+}
+
 .hover-white:hover {
 	color: #fff;
 }
 
 .hover-white:focus {
 	color: #fff;
+}
+
+.border-bottom {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.border-black-20 {
+	border-color: rgba(0, 0, 0, 0.2);
+}
+
+.line-height-copy {
+	line-height: 1.5;
+}
+
+.padding-right-3 {
+	padding-right: 1rem;
+}
+
+.padding-bottom-3 {
+	padding-bottom: 1rem;
+}
+
+.padding-vertical-3 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.text-align-left {
+	text-align: left;
 }
 
 .padding-all-4 {
@@ -404,3 +442,4 @@ button:hover {
 		width: 100%;
 	}
 }
+
