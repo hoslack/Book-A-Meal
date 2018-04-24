@@ -30,6 +30,11 @@
 	border-color: #408bc9;
 }
 
+.mid-gray {
+    color: #555;
+}
+
+
 .display-none {
 	display: none;
 }
@@ -46,6 +51,9 @@
 	display: table-cell;
 }
 
+.display-block{
+	display: block;
+}
 .sans-serif {
 	font-family: -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica,
 		ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;
@@ -186,6 +194,10 @@
 	text-align: left;
 }
 
+.text-align-centre {
+	text-align: center;
+}
+
 .padding-all-4 {
 	padding: 2rem;
 }
@@ -195,6 +207,10 @@
 }
 .padding-top-6 {
 	padding-top: 8rem;
+}
+
+.padding-top-5 {
+	padding-top: 6rem;
 }
 
 .padding-bottom-5 {
@@ -209,6 +225,16 @@
 .padding-horizontal-3 {
 	padding-left: 1rem;
 	padding-right: 1rem;
+}
+
+.padding-vertical-4 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.padding-horizontal-2 {
+    padding-left: .5rem;
+    padding-right: .5rem;
 }
 
 .margin-auto {
@@ -280,6 +306,30 @@
 	vertical-align: middle;
 }
 
+
+.link {
+    text-decoration: none;
+    transition: color .15s ease-in;
+}
+
+.link:link, .link:visited {
+    transition: color .15s ease-in;
+}
+
+.link:hover {
+    transition: color .15s ease-in;
+}
+
+.link:active {
+    transition: color .15s ease-in;
+}
+
+.link:focus {
+    transition: color .15s ease-in;
+    outline: 1px dotted currentColor;
+}
+
+
 .grow {
 	-moz-osx-font-smoothing: grayscale;
 	backface-visibility: hidden;
@@ -312,6 +362,28 @@
 	transform: scale(0.95);
 }
 
+
+.ttu {
+    text-transform: uppercase;
+}
+
+
+.dim {
+    opacity: 1;
+    transition: opacity .15s ease-in;
+}
+
+.dim:hover, .dim:focus {
+    opacity: .5;
+    transition: opacity .15s ease-in;
+}
+
+.dim:active {
+    opacity: .8;
+    transition: opacity .15s ease-out;
+}
+
+
 @media screen and (min-width: 30em) and (max-width: 60em) {
 	.padding-bottom-6-medium {
 		padding-bottom: 8rem;
@@ -327,6 +399,22 @@
 		background-repeat: no-repeat;
 		background-position: center center;
 	}
+
+
+@media screen and (min-width: 30em) and (max-width: 60em) {
+    .padding-horizontal-5-medium {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+}
+
+@media screen and (min-width: 60em) {
+    .padding-horizontal-6-large {
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+}
+
 
 	.padding-bottom-7-large {
 		padding-bottom: 16rem;
@@ -452,3 +540,4 @@ button:hover {
 		width: 100%;
 	}
 }
+
