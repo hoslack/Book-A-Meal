@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="utf-8"/>
+	<title>Book-A-Meal | Meals</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header class="sans-serif">
+		<div class="cover background-left background-center-large" style="background-image: url(https://images.pexels.com/photos/8313/food-eating-potatoes-beer-8313.jpg?cs=srgb&dl=dinner-food-meal-8313.jpg&fm=jpg)">
+			<div class="background-black-80 padding-bottom-5 padding-bottom-6-medium padding-bottom-7-large">
+				<h1 class="font-size-2 font-size-1-large font-weight2 white-90 margin-bottom-0 line-height-title">The FoodPal</h1>
+				<nav class="display-table width-100 max-width-8 center"> 
+					<div class="display-table-cell vertical-align-middle text-align-right padding-all-3">
+						<a class="font-size-6 font-weight4 hover-white no-underline white-70 display-inline-block margin-left-2 padding-vertical-2 padding-horizontal-3 background-all" href="./index.html" 
+						id="signout">Sign Out</a> 
+						<a class="font-size-6 font-weight4 hover-white no-underline white-70 display-inline-block margin-left-2 padding-vertical-2 padding-horizontal-3 background-all" href="./menu.html" 
+						id="menu">Menu</a> 
+					</div>
+
+				</nav> 
+				<!-- The meals form-->
+				
+
+				<form action="#" class="background-white">
+					<div class="container">
+						<h1>Add Meals to the Restaurant</h1>
+						<hr>
+						<label for="meal"><b>Meal</b></label>
+						<select class="width-100" type="text"  name="meal" required>
+							<option value="">---Meal---</option>
+							<option value="Rice">Rice</option>
+							<option value="Ugali">Ugali</option>
+							<option value="Potatos">Potatos</option>
+						</select> 
+						<br/><br/>
+						<input name="" class="width-100 line-height-copy" type="number" placeholder="Price" name="price" required />
+
+						<div class="clearfix">
+							<button type="button" class="cancelbtn">Cancel</button>
+							<button type="submit" class="signupbtn">Submit</button>
+						</div>
+					</div>
+				</form> 
+
+				
+				<div class="padding-all-4 background-white">
+					<div class="overflow-auto">
+						<table class="font-size-6 width-100 max-width-8 center" cellspacing="0">
+							<thead>
+								<tr>
+									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">Meal</th>
+									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">Price</th>
+									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">-</th>
+									<th class="font-weight6 border-bottom border-black-20 text-align-left padding-bottom-3 padding-right-3 background-white">-</th>
+								</tr>
+							</thead>
+							<tbody class="line-height-copy">
+								<tr>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Ugali</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">250</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-red" href="#">Delete</button></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">  <button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-blue" href="#">Edit</button></td>
+								</tr>
+								<tr>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Potatos</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">200</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-red" href="#">Delete</button></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-blue" href="#">Edit</button></td>
+								</tr>
+								<tr>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Beef</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">350</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-red" href="#">Delete</button></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-blue" href="#">Edit</button></td>
+								</tr>
+								<tr>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Chicken</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">400</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-red" href="#">Delete</button></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-blue" href="#">Edit</button></td>
+								</tr>
+								<tr>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Rice</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">250</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-red" href="#">Delete</button></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-blue" href="#">Edit</button></td>
+								</tr>
+								<tr>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">Tender goat</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20">400</td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-red" href="#">Delete</button></td>
+									<td class="padding-vertical-3 padding-right-3 border-bottom border-black-20"><button class="font-weight6 grow no-underline border-pill padding-horizontal-3 padding-vertical-2 margin-bottom-2 display-inline-block white background-blue" href="#">Edit</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div> 
+	</header>
+		<footer class="padding-vertical-4 padding-horizontal-3 padding-horizontal-5-medium padding-horizontal-6-large mid-gray text-align-centre">
+		<small class="font-size-6 display-block text-align-centre">© 2016 <b class="ttu">The FoodPal Inc</b>. All Rights Reserved</small>
+		<div class="text-align-centre margin-top-3">
+			<a href="#" title="Language" class="font-size-6 display-inline-block padding-horizontal-2 link mid-gray dim">Contact Us</a>
+			<a href="#"    title="Terms" class="font-size-6 display-inline-block padding-horizontal-2 link mid-gray dim">Terms of Use</a>
+			<a href="#"  title="Privacy" class="font-size-6 display-inline-block padding-horizontal-2 link mid-gray dim">Privacy</a>
+		</div>
+	</footer>
+	<script src="script.js"></script>
+</body>
+<link rel="stylesheet" type="text/css" href="">
+</html>

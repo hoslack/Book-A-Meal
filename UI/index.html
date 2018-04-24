@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="utf-8"/>
+	<title>Book-A-Meal | Index</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header class="sans-serif">
+		<div class="cover background-left background-center-large" style="background-image: url(https://images.pexels.com/photos/8313/food-eating-potatoes-beer-8313.jpg?cs=srgb&dl=dinner-food-meal-8313.jpg&fm=jpg)">
+			<div class="background-black-80 padding-bottom-5 padding-bottom-6-medium padding-bottom-7-large">
+				<nav class="display-table width-100 max-width-8 center"> 
+					<div class="display-table-cell vertical-align-middle text-align-right padding-all-3">
+						<a class="font-size-6 font-weight4 hover-white no-underline white-70 display-inline-block margin-left-2 padding-vertical-2 padding-horizontal-3 background-all" href="#" 
+						onclick="return showSignInModal()" 
+						id="signin">Sign In</a> 
+						<a class="font-size-6 font-weight4 hover-white no-underline white-70 display-inline-block margin-left-2 padding-vertical-2 padding-horizontal-3 background-all" href="./admin.html" 
+						id="admin">Admin</a> 
+					</div>
+				</nav> 
+				<!-- The signin Modal containing the signin form-->
+				<div id="signinModal" class="modal display-none padding-horizontal-3 padding-top-5 width-100 height-100 position-fixed overflow-auto">
+					<!-- Modal content -->
+					<div class="modal-content margin-auto width-80 padding-all-4">
+						<span class="close float-right font-size-3 black font-weight-bold">&times;</span>
+						<form action="#" style="border:1px solid #ccc">
+							<div class="container">
+								<h1>Sign In</h1>
+								<p>Please fill in this form to sign in</p>
+								<hr>
+
+								<label for="email"><b>Email</b></label>
+								<input class="width-100" type="text" placeholder="Enter Email" name="email" required>
+
+								<label for="psw"><b>Password</b></label>
+								<input class="width-100" type="password" placeholder="Enter Password" name="psw" required>
+								<div class="clearfix">
+									<button type="button" class="cancelbtn">Cancel</button>
+									<button type="submit" class="signupbtn">Sign In</button>
+								</div>
+							</div>
+						</form> 
+					</div>
+				</div>
+
+
+				<!-- This is another modal for signing up -->
+				<div id="signupModal" class="modal display-none padding-top-6 width-100 height-100 position-fixed overflow-auto">
+					<!-- Modal content -->
+					<div class="modal-content margin-auto width-80 padding-all-4">
+						<span class="close float-right font-size-3 black font-weight-bold">&times;</span>
+						<form action="#" style="border:1px solid #ccc">
+							<div class="container">
+								<h1>Sign Up</h1>
+								<p>Please fill in this form to create an account.</p>
+								<hr>
+
+								<label for="email"><b>Email</b></label>
+								<input class="width-100" type="text" placeholder="Enter Email" name="email" required>
+
+								<label for="psw"><b>Password</b></label>
+								<input class="width-100" type="password" placeholder="Enter Password" name="psw" required>
+
+								<label for="psw-repeat"><b>Repeat Password</b></label>
+								<input class="width-100" type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+								<label>
+									<input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+								</label>
+								<div class="clearfix">
+									<button type="button" class="cancelbtn">Cancel</button>
+									<button type="submit" class="signupbtn">Sign Up</button>
+								</div>
+							</div>
+						</form> 
+					</div>
+				</div>
+				<div class="text-align-centre-large margin-top-4 margin-top-5-medium margin-top-6-large padding-horizontal-3">
+					<h1 class="font-size-2 font-size-1-large font-weight2 white-90 margin-bottom-0 line-height-title">The FoodPal</h1>
+					<h2 class="font-weight1 font-size-3 white-80 margin-top-3 margin-bottom-4">I am your friend, I will help you order your favourite dish !</h2>
+					<a class="font-size-6 no-underline grow display-inline-block vertical-align-middle background-blue white background-all border-blue padding-horizontal-3 padding-vertical-2 margin-bottom-3" href="./order.html">Order Now</a>
+					<span class="display-inline-block vertical-align-middle padding-horizontal-3 white-70 margin-bottom-3">or</span>
+					<a id="signup" class="font-size-6 no-underline grow display-inline-block vertical-align-middle white background-all border-white padding-horizontal-3 padding-vertical-2 margin-bottom-3" href="#" onclick="return showSignUpModal()">Sign Up Here</a>
+				</div>
+			</div>
+		</div> 
+	</header>
+	<footer class="padding-vertical-4 padding-horizontal-3 padding-horizontal-5-medium padding-horizontal-6-large mid-gray text-align-centre">
+		<small class="font-size-6 display-block text-align-centre">© 2016 <b class="ttu">The FoodPal Inc</b>. All Rights Reserved</small>
+		<div class="text-align-centre margin-top-3">
+			<a href="#" title="Language" class="font-size-6 display-inline-block padding-horizontal-2 link mid-gray dim">Contact Us</a>
+			<a href="#"    title="Terms" class="font-size-6 display-inline-block padding-horizontal-2 link mid-gray dim">Terms of Use</a>
+			<a href="#"  title="Privacy" class="font-size-6 display-inline-block padding-horizontal-2 link mid-gray dim">Privacy</a>
+		</div>
+	</footer>
+	<script src="script.js"></script>
+</body>
+<link rel="stylesheet" type="text/css" href="">
+</html>
