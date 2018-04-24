@@ -1,4 +1,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/1d4881923768a4d093a0/maintainability)](https://codeclimate.com/github/hoslack/Book-A-Meal/maintainability)
+[![Build Status](https://travis-ci.org/hoslack/Book-A-Meal.svg?branch=master)](https://travis-ci.org/hoslack/Book-A-Meal)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/763d0acb69e1418ca72d9f7c0e7ad2f5)](https://www.codacy.com/app/hoslack/Book-A-Meal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hoslack/Book-A-Meal&amp;utm_campaign=Badge_Grade)
 # Book-A-Meal
 ## What? 
 Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.
@@ -16,10 +18,14 @@ Book-A-Meal is an application that allows customers to make food orders and help
 - Admin (Caterer) should be able to see order history
 - The application should be able to host more than one caterer.
 
-## Similar application in Production 
-### [MealPal](https://mealpal.com/)
+## Screenshots of the UI
+![Index](http://res.cloudinary.com/hoslack/image/upload/v1524319692/imageedit_5_6173175048_vnobg8.png)
 
-![MealPal](http://res.cloudinary.com/hoslack/image/upload/v1524287008/mealpal_xkwrdw.png)
+
+![Sign Up](http://res.cloudinary.com/hoslack/image/upload/v1524319699/imageedit_6_4169369105_ekaxlm.png)
+
+
+![Sign In](http://res.cloudinary.com/hoslack/image/upload/v1524319706/imageedit_7_5004553090_i3lgvg.png)
 
 ## Technology Stack:
 - [PostgreSql](https://www.postgresql.org/) with [SQLAlchemy](https://www.sqlalchemy.org/) (database and ORM)
@@ -37,8 +43,12 @@ On your terminal, paste these commands one by one.
 
 `git clone https://github.com/hoslack/Book-A-Meal.git`
 
-`cd UI`
-Then open `index.html` in your browser
+`cd Book-A-Meal`
+
+`pip install -r requirements.txt`
+
+The run tests 
+`pytest tests`
 
 ## Contributing
 I appreciate your eagerness to chip in in this wonderful course but you will have to wait for a **month** or two. :blush:
