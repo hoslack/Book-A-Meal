@@ -8,3 +8,4 @@ __pycache__/
 nosetests.xml
 coverage.xml
 pip-log.txt
+*.py___jb_old___
