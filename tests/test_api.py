@@ -66,4 +66,3 @@ class TestBookAMealAPI(unittest.TestCase):
     def test_edit_meal_status_code(self):
         result = self.app.put('/meals/1', data={'name': 'rice', 'price': 250})
         self.assertEqual(result.status_code, 200)
-        
