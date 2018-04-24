@@ -32,11 +32,18 @@ class TestBookAMealAPI(unittest.TestCase):
         result = self.sign_in()
         self.assertEqual(result.status_code, 200)
 
-    def test_login_status_code(self):
+    def test_login_correct_login(self):
         """test login after signing in"""
         self.sign_in()
         result = self.log_in()
         self.assertEqual(result.status_code, 200)
+        self.assertIn(b'Success', result.data)
+
+    def test_login_with_wrong_credentials(self):
+        """test successful login"""
+        self.sign_in()  # must sign in first for successful login
+        result = self.log_in(email='wrong@mail', password='wrongpass')
+        self.assertIn(b'Wrong Credentials, try again', result.data)
 
     def test_get_all_meals_status_code(self):
         result = self.app.get('/meals')
@@ -66,3 +73,7 @@ class TestBookAMealAPI(unittest.TestCase):
     def test_edit_meal_status_code(self):
         result = self.app.put('/meals/1', data={'name': 'rice', 'price': 250})
         self.assertEqual(result.status_code, 200)
+
+
+if __name__ == "__main__":
+    unittest.main()
