@@ -1,2 +1,0 @@
-class Dish(object):
-    pass

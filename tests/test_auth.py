@@ -8,7 +8,6 @@ class TestBookAMealAPI(unittest.TestCase):
         """Initializing a test client and making the environment a testing one"""
         self.app = app.test_client()
         self.app.testing = True
-        self.meal = {'name': 'ugali', 'price': 100}
 
     def sign_in(self, email='user@gmail.com', password='testpass'):
         user_data = {
@@ -44,35 +43,6 @@ class TestBookAMealAPI(unittest.TestCase):
         self.sign_in()  # must sign in first for successful login
         result = self.log_in(email='wrong@mail', password='wrongpass')
         self.assertIn(b'Wrong Credentials, try again', result.data)
-
-    def test_get_all_meals_status_code(self):
-        result = self.app.get('/api/v1/meals')
-        self.assertEqual(result.status_code, 200)
-
-    def test_get_all_meals_has_json(self):
-        result = self.app.get('/api/v1/meals')
-        self.assertEqual(result.content_type, 'application/json')
-
-    def test_add_meal_status_code(self):
-        result = self.app.post('/api/v1/meals', data=self.meal)
-        self.assertEqual(result.status_code, 201)
-
-    def test_add_meal_success_response(self):
-        result = self.app.post('/api/v1/meals', data=self.meal)
-        self.assertIn('Success', result)
-
-    def test_add_meal_without_data(self):
-        result = self.app.post('/api/v1/meals')
-        self.assertNotEqual(result.status_code, 201)
-
-    def test_duplicate_meal_creation(self):
-        self.app.post('/meals', self.meal)
-        result1 = self.app.post('/api/v1/meals', self.meal)
-        self.assertEqual(result1.status_code, 409)
-
-    def test_edit_meal_status_code(self):
-        result = self.app.put('/api/v1/meals/<int:id>', data={'name': 'rice', 'price': 250})
-        self.assertEqual(result.status_code, 200)
 
 
 if __name__ == "__main__":
