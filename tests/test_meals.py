@@ -40,6 +40,11 @@ class TestMeals(unittest.TestCase):
         result = self.app.put('/api/v1/meals/<int:id>', data={'name': 'rice', 'price': 250})
         self.assertEqual(result.status_code, 200)
 
+    def test_delete_non_existent_meal(self):
+        """Test for deleting of an id that does not exist"""
+        result = self.app.delete('/api/v1/-234')
+        self.assertEqual(result.status_code, 404)
+
 
 if __name__ == "__main__":
     unittest.main()
