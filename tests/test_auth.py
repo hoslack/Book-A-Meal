@@ -2,7 +2,7 @@ import unittest
 from app import app
 
 
-class TestBookAMealAPI(unittest.TestCase):
+class TestAuth(unittest.TestCase):
     """Class for testing all the API endpoints"""
     def setUp(self):
         """Initializing a test client and making the environment a testing one"""

@@ -32,14 +32,13 @@ class TestMeals(unittest.TestCase):
         self.assertNotEqual(result.status_code, 201)
 
     def test_duplicate_meal_creation(self):
-        self.app.post('/meals', self.meal)
+        self.app.post('/api/v1/meals', self.meal)
         result1 = self.app.post('/api/v1/meals', self.meal)
         self.assertEqual(result1.status_code, 409)
 
     def test_edit_meal_status_code(self):
         result = self.app.put('/api/v1/meals/<int:id>', data={'name': 'rice', 'price': 250})
         self.assertEqual(result.status_code, 200)
-
 
 
 if __name__ == "__main__":
