@@ -7,8 +7,9 @@ class Menu(object):
         self.meals = []
 
     def add_meals(self, new_meals):
-        """A method to add a single item to the bucket lists"""
-        self.meals.append(new_meals)
+        """A method to add a new items to the menu"""
+        new_menu = [*new_meals, *self.meals]
+        self.meals = list(set(new_menu))
         return 'Meals have been added successfully'
 
     def get_menu(self):

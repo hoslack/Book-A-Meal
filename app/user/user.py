@@ -10,23 +10,7 @@ class User(object):
         self.password = password
 
 
-class Admin(User):
-    """add role property to admin"""
-    def __init__(self, name, email, password, role='admin'):
-        User.__init__(name, email, password)
-        self.role = role
-
-    def __repr__(self):
-        """Represent the admin using name"""
-        return '{}'.format(self.name)
 
 
-class Customer(User):
-    """add customer property to admin"""
-    def __init__(self, name, email, password, role='customer'):
-        User.__init__(name, email, password)
-        self.role = role
 
-    def __repr__(self):
-        """Represent the admin using name"""
-        return '{}'.format(self.name)
+
