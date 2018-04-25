@@ -3,7 +3,7 @@ from app import app
 
 
 class TestMenu(unittest.TestCase):
-    """Test the class meals and related endpoints"""
+    """Test the class menu and related endpoints"""
 
     def setUp(self):
         """Set up reusable data"""
