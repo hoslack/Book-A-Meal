@@ -14,14 +14,14 @@ class TestAuth(unittest.TestCase):
             'email': email,
             'password': password
         }
-        return self.app.post('/api/v1/auth/signup', data=user_data)
+        return self.app.post('/api/v1/auth/signup/', data=user_data)
 
     def log_in(self, email='user@gmail.com', password='testpass'):
         user_data = {
             'email': email,
             'password': password
         }
-        return self.app.post('/api/v1/auth/login', data=user_data)
+        return self.app.post('/api/v1/auth/login/', data=user_data)
 
     def test_home_status_code(self):
         result = self.app.get('/api/v1/')
