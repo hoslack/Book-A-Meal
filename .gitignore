@@ -1,0 +1,12 @@
+.idea
+venv
+.env
+__pycache__/
+*.py[cod]
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+pip-log.txt
+*.py___jb_old___
+.pytest_cache

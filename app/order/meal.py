@@ -1,0 +1,2 @@
+class Meal(object):
+    pass
