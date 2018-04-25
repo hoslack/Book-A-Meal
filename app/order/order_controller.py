@@ -3,7 +3,7 @@ from app.order.meal import Meal
 from app.order.menu import Menu
 
 
-class Admin(object):
+class OrderController(object):
     def __init__(self):
         self.meals = []
         self.orders = []
