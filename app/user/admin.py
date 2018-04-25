@@ -1,7 +1,6 @@
 """Modelling the admin"""
 from app.user.user import User
 from app.order.meal import Meal
-from app.order.order import Order
 from app.order.menu import Menu
 
 
@@ -53,6 +52,9 @@ class Admin(User):
 
     def get_orders(self):
         return self.orders
+
+    def get_menu(self):
+        return self.menu
 
     def __repr__(self):
         """Represent the admin using name"""
