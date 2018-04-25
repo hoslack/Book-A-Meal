@@ -19,6 +19,7 @@ Book-A-Meal is an application that allows customers to make food orders and help
 - Admin (Caterer) should be able to see order history
 - The application should be able to host more than one caterer.
 
+
 ## Screenshots of the UI
 ![Index](http://res.cloudinary.com/hoslack/image/upload/v1524319692/imageedit_5_6173175048_vnobg8.png)
 
@@ -36,20 +37,88 @@ Book-A-Meal is an application that allows customers to make food orders and help
 
 ## Tools:
 - [Pivotal Tracker](www.pivotaltracker.com) (A project management tool)
+- [Pytest](https://docs.pytest.org/en/latest/) (A tool for testing)
+- [VirtualEnv](https://virtualenv.pypa.io/en/stable/) (A tool for holding all dependencies used in the project)
+- [Coverage](https://coverage.readthedocs.io/en/coverage-4.5.1/) (A tool for getting the coverage of the tests)
+- [Travis CI](https://travis-ci.org/) (An online tool for continuous integration after testing)
 
 ## Getting Started
 If you want to try out this application at this stage of development you just have to follow the simple instructions below:
 
 On your terminal, paste these commands one by one.
 
+***Please Ensure you have python3 and above before doing this***
+
+Install pip 
+
+`sudo apt-get install python-pip`
+
+Clone the repository
+
 `git clone https://github.com/hoslack/Book-A-Meal.git`
 
-`cd Book-A-Meal`
+Get into the root direcory
+
+`cd Book-A-Meal/`
+
+Install virtualenv
+
+`pip install virtualenv`
+
+Create a virtual environment in the root directory
+
+`virtualenv myenv`  ***or***
+
+`virtualenv -p python3 myenv` ***or***
+
+`python3 -m venv myenv` ***using python3 command***
+
+Activate the virtualenv
+
+`source myenv/bin/activate`
+
+Install the requirements of the project
 
 `pip install -r requirements.txt`
 
+Create a file in the root directory called `.env` and add the two lines below
+
+`export FLASK_APP="runapp.py"`
+
+`export SECRET="secret-string-random-veryrandom"`
+
+Activate the env variables 
+
+`source .env`
+
+Run the application 
+
+`flask run`
+
 The run tests 
+
 `pytest tests`
+
+***Done! That's all you need to get the project up and running***
+
+## API Endpoints 
+These you can test in your browser, or  Postman, or curl
+
+URL Endpoint	|               HTTP Request   | Resource Accessed | Access Type|
+-------------------|-----------------|-------------|------------------
+/api/v1/auth/signup   |      POST	| Register a new user|public
+/api/v1/auth/login	  |     POST	| Login and add user to session|public
+/api/v1/auth/logout	  |     POST	| Logout and delete session|public
+/api/v1/meals	  |     GET	| Get all the meal options|Admin Only(Private)
+/api/v1/meals	              |      POST	|Add a meal option|Admin Only(Private)
+/api/v1/meals/<mealId>	              |      PUT	|     Update the information of a meal option|Admin Only(Private)
+/api/v1/meals/<mealId>            |  	DELETE	    | Remove a meal option | Admin Only(Private)
+/api/v1/menu/	          |      POST	|     Setup the menu for the day  |Admin Only(Private)
+/api/v1/menu/	          |      GET	| Get the menu for the day |Authenticated user(Private)
+/api/v1/orders  |           POST    |Select the meal option from the menu|Authenticated user(Private)
+/api/v1/orders/<orderId>     |     PUT	| Modify an order |Authenticated user(Private) (Time bound)
+/api/v1/orders|	GET	| Get all the orders  |Admin Only(Private)
+
 
 ## Contributing
 I appreciate your eagerness to chip in in this wonderful course but you will have to wait for a **month** or two. :blush:
