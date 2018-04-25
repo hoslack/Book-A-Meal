@@ -11,6 +11,13 @@ def index():
     return 'Hello World'
 
 
+def session_user():
+    """Get the current user"""
+    for user in registered_users:
+        if user.email == session['user']:
+            return user
+
+
 @app.route('/api/v1/auth/signup/', methods=['POST'])
 def signup():
     """A method for creating an account for the user from the json data given"""
@@ -46,4 +53,3 @@ def login():
                 return "Wrong Username or Password"
     return "You are not a registered user. Please register."
 
-@app.route('/api/v1/')
