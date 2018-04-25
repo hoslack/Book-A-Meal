@@ -1,5 +1,5 @@
 import unittest
-from flask import jsonify
+from flask import json, jsonify
 from app import app
 
 
@@ -19,24 +19,29 @@ class TestAuth(unittest.TestCase):
         return self.app.post('/api/v1/auth/login/', data=user_data)
 
     def test_home_status_code(self):
-        result = self.app.get('/api/v1/')
+
+        rv = self.app.get('/api/v1/')  # rv is return value
+        result = json.loads(rv.data.decode())
         self.assertEqual(result.status_code, 200)
 
     def test_signin_status_code(self):
-        result = self.sign_in()
+        rv = self.sign_in()
+        result = json.loads(rv.data.decode())
         self.assertEqual(result.status_code, 200)
 
     def test_login_correct_login(self):
         """test login after signing in"""
         self.sign_in()
-        result = self.log_in()
+        rv = self.log_in()
+        result = json.loads(rv.data.decode())
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'Success', result.data)
 
     def test_login_with_wrong_credentials(self):
         """test successful login"""
         self.sign_in()  # must sign in first for successful login
-        result = self.log_in(email='wrong@mail', password='wrongpass')
+        rv = self.log_in(email='wrong@mail', password='wrongpass')
+        result = json.loads(rv.data.decode())
         self.assertIn(b'Wrong Credentials, try again', result.data)
 
 

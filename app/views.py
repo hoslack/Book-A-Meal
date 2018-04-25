@@ -46,6 +46,7 @@ def login():
                 return "Wrong Username or Password"
     return "You are not a registered user. Please register."
 
+
 def session_user():
     """Get the current user"""
     for user in registered_users:
@@ -62,6 +63,7 @@ def get_meals():
     if current_user.role != 'admin':
         return 'Only admin can view the meals'
     return current_user.meals
+
 
 @app.route('/api/v1/orders', methods=['GET'])
 def get_orders():
