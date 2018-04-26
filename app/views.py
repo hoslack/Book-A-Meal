@@ -1,4 +1,4 @@
-from flask import request, session
+from flask import request, session, jsonify
 from app.user.user import User
 from app import app
 
@@ -22,10 +22,10 @@ def signup():
     password = request.form['password']
     for user in registered_users:
         if user.email == email:
-            return 'User already exists, login instead'
+            return jsonify({'message': 'User exists, log in instead'})
     new_customer = User(name=name, email=email, password=password)
     registered_users.append(new_customer)
-    return 'User registration successful'
+    return jsonify({'message': 'User registration successful'})
 
 
 @app.route('/api/v1/auth/login/', methods=['POST'])
@@ -41,10 +41,10 @@ def login():
             if user.password == password:
                 session['logged_in'] = True
                 session['user'] = email
-                return 'Login  was successful'
+                return jsonify({'message': 'Login successful'})
             else:
-                return "Wrong Username or Password"
-    return "You are not a registered user. Please register."
+                return jsonify({'message': "Wrong Username or Password"})
+    return jsonify({'message': "You are not a registered user. Please register."})
 
 
 def session_user():

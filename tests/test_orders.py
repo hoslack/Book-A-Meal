@@ -19,44 +19,36 @@ class TestOrders(unittest.TestCase):
         self.assertIsInstance(self.order, Order, "An instance of order was not creaated")
 
     def test_get_order(self):
-        rv = self.app.get('/api/v1/orders/')
-        result = json.loads(rv.data.decode())
+        result = self.app.get('/api/v1/orders/')
         self.assertEqual(result.status_code, 200)
 
     def test_get_all_orders_has_json(self):
-        rv = self.app.get('/api/v1/orders/')
-        result = json.loads(rv.data.decode())
+        result = self.app.get('/api/v1/orders/')
         self.assertEqual(result.content_type, 'application/json')
 
     def test_orders_is_dict(self):
-        rv = self.app.get('/api/v1/orders/')
-        result = json.loads(rv.data.decode())
+        result = self.app.get('/api/v1/orders/')
         self.assertIsInstance(result.data, list)
 
     def test_add_order_status_code(self):
-        rv = self.app.post('/api/v1/orders/', data=self.order)
-        result = json.loads(rv.data.decode())
+        result = self.app.post('/api/v1/orders/', data=self.order)
         self.assertEqual(result.status_code, 201)
 
     def test_add_order_success_response(self):
-        rv = self.app.post('/api/v1/orders/', data=self.order)
-        result = json.loads(rv.data.decode())
+        result = self.app.post('/api/v1/orders/', data=self.order)
         self.assertIn(b'Success', result.data)
 
     def test_add_order_without_data(self):
-        rv = self.app.post('/api/v1/orders/')
-        result = json.loads(rv.data.decode())
+        result = self.app.post('/api/v1/orders/')
         self.assertNotEqual(result.status_code, 200)
 
     def test_edit_order_status_code(self):
         self.app.post('/api/v1/orders/', data=Order('hos', jsonify(name='rice', price=290)))
-        rv = self.app.put('/api/v1/orders/<int:id>/', data=Order('hos', jsonify(name='fish', price=290)))
-        result = json.loads(rv.data.decode())
+        result = self.app.put('/api/v1/orders/<int:id>/', data=Order('hos', jsonify(name='fish', price=290)))
         self.assertEqual(result.status_code, 200)
 
     def test_edit_non_existent_order(self):
-        rv = self.app.put('/api/v1/orders/-134/', data={'customer': 'hos', 'name': 'rice', 'price': 250})
-        result = json.loads(rv.data.decode())
+        result = self.app.put('/api/v1/orders/-134/', data={'customer': 'hos', 'name': 'rice', 'price': 250})
         self.assertEqual(result.status_code, 404)
 
 
