@@ -1,4 +1,5 @@
 import unittest
+from flask import json
 from app import app
 from app.order.order import Order
 
@@ -13,7 +14,7 @@ class TestOrders(unittest.TestCase):
         self.customer = 'hoslack'
         self.meal_name = 'ugali'
         self.price = 100
-        self.order_data = {self.customer, self.meal_name, self.price}
+        self.order_data = {'customer': self.customer, 'meal_name': self.meal_name, 'price': self.price}
         self.order = Order(customer_name=self.customer, meal_name=self.meal_name, price=self.price)
 
     def test_order_creation(self):
