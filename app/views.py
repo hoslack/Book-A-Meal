@@ -59,6 +59,14 @@ def session_user():
             return False
 
 
+@app.route('/api/v1/logout/', methods=['POST'])
+def logout():
+    current_user = session_user()
+    if session['user'] and session['user'] == current_user.email:
+        return jsonify({'message': 'You successfully logged out'})
+    return jsonify({'message': 'There is no user in session'})
+
+
 @app.route('/api/v1/meals/', methods=['GET'])
 def get_meals():
     """A route for getting all the available meals by the admin"""
