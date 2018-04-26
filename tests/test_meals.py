@@ -16,41 +16,51 @@ class TestMeals(unittest.TestCase):
 
     def test_meal_creation(self):
         """Test if meal object is an instance of Meal class"""
-        self.assertIsInstance(self.meal, Meal)
+        with app.app_context():
+            self.assertIsInstance(self.meal, Meal)
 
     def test_get_all_meals_status_code(self):
-        result = self.app.get('/api/v1/meals/')
-        self.assertEqual(result.status_code, 200)
+        with app.app_context():
+            result = self.app.get('/api/v1/meals/')
+            self.assertEqual(result.status_code, 200)
 
     def test_get_all_meals_has_json(self):
-        result = self.app.get('/api/v1/meals/')
-        self.assertEqual(result.content_type, 'application/json')
+        with app.app_context():
+            result = self.app.get('/api/v1/meals/')
+            self.assertEqual(result.content_type, 'application/json')
 
     def test_add_meal_status_code(self):
-        result = self.app.post('/api/v1/meals/', form=self.meal_data)
-        self.assertEqual(result.status_code, 201)
+        with app.app_context():
+            result = self.app.post('/api/v1/meals/', form=self.meal_data)
+            self.assertEqual(result.status_code, 201)
 
     def test_add_meal_success_response(self):
-        result = self.app.post('/api/v1/meals/', form=self.meal_data)
-        self.assertIn('Success', result)
+        with app.app_context():
+            result = self.app.post('/api/v1/meals/', form=self.meal_data)
+            self.assertIn('Success', result)
 
     def test_add_meal_without_data(self):
-        result = self.app.post('/api/v1/meals/')
-        self.assertNotEqual(result.status_code, 201)
+        with app.app_context():
+            result = self.app.post('/api/v1/meals/')
+            self.assertNotEqual(result.status_code, 201)
 
     def test_duplicate_meal_creation(self):
-        self.app.post('/api/v1/meals', self.meal_data)
-        result = self.app.post('/api/v1/meals/', self.meal_data)
-        self.assertEqual(result.status_code, 409)
+        with app.app_context():
+            self.app.post('/api/v1/meals', self.meal_data)
+            result = self.app.post('/api/v1/meals/', self.meal_data)
+            self.assertEqual(result.status_code, 409)
 
     def test_edit_meal_status_code(self):
-        result = self.app.put('/api/v1/meals/<int:id>/', form=jsonify({'name': 'rice', 'price': 250}))
-        self.assertEqual(result.status_code, 200)
+        with app.app_context():
+            result = self.app.put('/api/v1/meals/<int:id>/', form=jsonify({'name': 'rice', 'price': 250}))
+            self.assertEqual(result.status_code, 200)
 
     def test_delete_non_existent_meal(self):
         """Test for deleting of an id that does not exist"""
-        result = self.app.delete('/api/v1/-234/')
-        self.assertEqual(result.status_code, 404)
+        with app.app_context():
+
+            result = self.app.delete('/api/v1/-234/')
+            self.assertEqual(result.status_code, 404)
 
 
 if __name__ == "__main__":
