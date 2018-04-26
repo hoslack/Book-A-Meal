@@ -4,10 +4,13 @@ from app import app
 
 
 registered_users = []
+admin = User(name='admin', email='admin@gmail.com', password='1234', admin=True)
+registered_users.append(admin)
 
 
 @app.route('/')
 def index():
+    """For testing the application on the browser during development"""
     return 'Hello World'
 
 
@@ -52,6 +55,8 @@ def session_user():
     for user in registered_users:
         if user.email == session['user']:
             return user
+        else:
+            return False
 
 
 @app.route('/api/v1/meals/', methods=['GET'])
@@ -60,7 +65,7 @@ def get_meals():
     current_user = session_user()
     if not current_user:
         return jsonify({'message': 'Please Login first'})
-    if current_user.role != 'admin':
+    if not current_user.admin:
         return jsonify({'message': 'Only admin can view the meals'})
     meals = current_user.get_meals()
     return meals
@@ -72,7 +77,7 @@ def get_orders():
     current_user = session_user()
     if not current_user:
         return jsonify({'message': 'Please Login first'})
-    if current_user.role != 'admin':
+    if not current_user.admin:
         return jsonify({'message': 'Only admin can view the orders'})
     orders = current_user.get_orders()
     return orders
@@ -84,12 +89,48 @@ def add_meal():
     current_user = session_user()
     if not current_user:
         return jsonify({'message': 'Please Login first'})
-    if current_user.role != 'admin':
+    if not current_user.admin:
         return jsonify({'message': 'Only admin can view the orders'})
     if not request.form:
         return jsonify({'message': 'No data provided'})
     meal_name = request.form['name']
     meal_price = request.form['price']
-    current_user.add_meal(meal_name, meal_price)
-    return jsonify({'message': 'Meal created successfully'})
+    result = current_user.add_meal(meal_name, meal_price)
+    return result
 
+
+@app.route('/api/v1/meals/<int:meal_id>/', methods=['DELETE'])
+def delete_meal(meal_id):
+    """This method removes a meal from the list of available meals"""
+    current_user = session_user()
+    if not current_user:
+        return jsonify({'message': 'Please Login first'})
+    if not current_user.admin:
+        return jsonify({'message': 'Only admin can delete meal'})
+    result = current_user.delete_meal(meal_id=meal_id)
+    return result
+
+
+@app.route('/api/v1/menu/', methods=['POST'])
+def create_menu():
+    """A method to add a meal option to the menu list by admin"""
+    current_user = session_user()
+    if not current_user:
+        return jsonify({'message': 'Please Login first'})
+    if not current_user.admin:
+        return jsonify({'message': 'Only admin can create a menu'})
+    meal1 = request.form['meal1']
+    meal2 = request.form['meal2']
+    total_price = request.form['total_price']
+    result = current_user.create_menu(meal1=meal1, meal2=meal2, total_price=total_price)
+    return result
+
+
+@app.route('/api/v1/menu/', methods=['GET'])
+def get_menu():
+    """A method that allows an authenticated user to get the menu, list of meal options"""
+    current_user = session_user()
+    if not current_user:
+        return jsonify({'message': 'Please Login first'})
+    result = current_user.get_menu()
+    return result

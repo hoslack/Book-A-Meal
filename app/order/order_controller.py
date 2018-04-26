@@ -38,7 +38,7 @@ class OrderController(object):
         else:
             return jsonify({'message': 'Meal does not exist'})
 
-    def get_all_meals(self):
+    def get_meals(self):
         """A method to retrieve and show all the meals in the application"""
         return jsonify({'data': self.meals})
 
