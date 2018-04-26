@@ -56,9 +56,9 @@ class OrderController(object):
         self.orders.append(order)
         return jsonify({'message': 'Order added successfully'})
 
-    def update_order(self, meal_id, meal_name, meal_price):
+    def update_order(self, order_id, meal_name, meal_price):
         """A method to modify the details of an order already made"""
-        order = [n for n in self.orders if n.id == meal_id]
+        order = [n for n in self.orders if n.id == order_id]
         # find the order by id
         if order:
             order.meal_name = meal_name

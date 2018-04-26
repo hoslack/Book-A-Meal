@@ -71,7 +71,7 @@ def get_meals():
     return meals
 
 
-@app.route('/api/v1/orders', methods=['GET'])
+@app.route('/api/v1/orders/', methods=['GET'])
 def get_orders():
     """A route for getting all the orders by the admin"""
     current_user = session_user()
@@ -83,7 +83,7 @@ def get_orders():
     return orders
 
 
-@app.route('/api/v1/meals', methods=['POST'])
+@app.route('/api/v1/meals/', methods=['POST'])
 def add_meal():
     """A route for adding a meal into the application"""
     current_user = session_user()
@@ -136,7 +136,7 @@ def get_menu():
     return result
 
 
-@app.route('/api/v1/orders', methods=['POST'])
+@app.route('/api/v1/orders/', methods=['POST'])
 def create_order():
     """A method to create an order by a customer"""
     current_user = session_user()
@@ -149,3 +149,13 @@ def create_order():
     return result
 
 
+@app.route('/api/v1/orders/<int:order_id>/', methods=['PUT'])
+def update_order(order_id):
+    """A method to modify an existing order by customer"""
+    current_user = session_user()
+    if not current_user:
+        return jsonify({'message': 'Please Login first'})
+    meal_name = request.form['meal_name']
+    meal_price = request.form['meal_price']
+    result = current_user.update_order(order_id=order_id, meal_name=meal_name, meal_price=meal_price)
+    return result
