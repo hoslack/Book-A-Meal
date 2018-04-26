@@ -1,5 +1,4 @@
 import unittest
-from flask import jsonify, json
 from app import app
 from app.order.order import Order
 
@@ -12,8 +11,10 @@ class TestOrders(unittest.TestCase):
         self.app = app.test_client()
         self.app.testing = True
         self.customer = 'hoslack'
-        self.meal = jsonify(name='ugali', price=100)
-        self.order = Order(customer_name=self.customer, meal=self.meal)
+        self.meal_name = 'ugali'
+        self.price = 100
+        self.order_data = {self.customer, self.meal_name, self.price}
+        self.order = Order(customer_name=self.customer, meal_name=self.meal_name, price=self.price)
 
     def test_order_creation(self):
         self.assertIsInstance(self.order, Order, "An instance of order was not creaated")
@@ -26,16 +27,12 @@ class TestOrders(unittest.TestCase):
         result = self.app.get('/api/v1/orders/')
         self.assertEqual(result.content_type, 'application/json')
 
-    def test_orders_is_dict(self):
-        result = self.app.get('/api/v1/orders/')
-        self.assertIsInstance(result.data, list)
-
     def test_add_order_status_code(self):
-        result = self.app.post('/api/v1/orders/', data=self.order)
+        result = self.app.post('/api/v1/orders/', data=self.order_data)
         self.assertEqual(result.status_code, 201)
 
     def test_add_order_success_response(self):
-        result = self.app.post('/api/v1/orders/', data=self.order)
+        result = self.app.post('/api/v1/orders/', data=self.order_data)
         self.assertIn(b'Success', result.data)
 
     def test_add_order_without_data(self):
@@ -43,8 +40,8 @@ class TestOrders(unittest.TestCase):
         self.assertNotEqual(result.status_code, 200)
 
     def test_edit_order_status_code(self):
-        self.app.post('/api/v1/orders/', data=Order('hos', jsonify(name='rice', price=290)))
-        result = self.app.put('/api/v1/orders/<int:id>/', data=Order('hos', jsonify(name='fish', price=290)))
+        self.app.post('/api/v1/orders/', data=self.order_data)
+        result = self.app.put('/api/v1/orders/<int:id>/', data={'customer': 'hos', 'meal_name': 'fish', 'price': 290})
         self.assertEqual(result.status_code, 200)
 
     def test_edit_non_existent_order(self):

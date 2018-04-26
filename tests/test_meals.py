@@ -1,5 +1,6 @@
 import unittest
 from app import app
+from app.order.meal import Meal
 
 
 class TestMeals(unittest.TestCase):
@@ -9,7 +10,12 @@ class TestMeals(unittest.TestCase):
         """Set up reusable data"""
         self.app = app.test_client()
         self.app.testing = True
-        self.meal = {'name': 'ugali', 'price': 100}
+        self.meal_data = {'name': 'ugali', 'price': 100}
+        self.meal = Meal(name='ugali', price=100)
+
+    def test_meal_creation(self):
+        """Test if meal object is an instance of Meal class"""
+        self.assertIsInstance(self.meal, Meal)
 
     def test_get_all_meals_status_code(self):
         result = self.app.get('/api/v1/meals/')
@@ -20,11 +26,11 @@ class TestMeals(unittest.TestCase):
         self.assertEqual(result.content_type, 'application/json')
 
     def test_add_meal_status_code(self):
-        result = self.app.post('/api/v1/meals/', data=self.meal)
+        result = self.app.post('/api/v1/meals/', form=self.meal_data)
         self.assertEqual(result.status_code, 201)
 
     def test_add_meal_success_response(self):
-        result = self.app.post('/api/v1/meals/', data=self.meal)
+        result = self.app.post('/api/v1/meals/', form=self.meal_data)
         self.assertIn('Success', result)
 
     def test_add_meal_without_data(self):
@@ -32,12 +38,12 @@ class TestMeals(unittest.TestCase):
         self.assertNotEqual(result.status_code, 201)
 
     def test_duplicate_meal_creation(self):
-        self.app.post('/api/v1/meals', self.meal)
-        result = self.app.post('/api/v1/meals/', self.meal)
+        self.app.post('/api/v1/meals', self.meal_data)
+        result = self.app.post('/api/v1/meals/', self.meal_data)
         self.assertEqual(result.status_code, 409)
 
     def test_edit_meal_status_code(self):
-        result = self.app.put('/api/v1/meals/<int:id>/', data={'name': 'rice', 'price': 250})
+        result = self.app.put('/api/v1/meals/<int:id>/', form={'name': 'rice', 'price': 250})
         self.assertEqual(result.status_code, 200)
 
     def test_delete_non_existent_meal(self):

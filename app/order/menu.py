@@ -1,21 +1,16 @@
 """Modelling the class menu that will hold the meals"""
+import uuid
 
 
-class Menu(object):
-    def __init__(self, menu_date):
-        self.menu_date = menu_date
-        self.meals = []
-
-    def add_meals(self, new_meals):
-        """A method to add a new items to the menu"""
-        new_menu = [*new_meals, *self.meals]
-        self.meals = list(set(new_menu))
-        return 'Meals have been added successfully'
-
-    def get_menu(self):
-        """A method to return all the meals in the menu"""
-        return self.meals
+class MenuItem(object):
+    def __init__(self, meal1, meal2, total_price, item_id=uuid.uuid4()):
+        self.meal1 = meal1
+        self.meal2 = meal2
+        self.total_price = total_price
+        self.item_id = item_id
 
     def __repr__(self):
         """Represent the admin using name"""
-        return '{}'.format(self.menu_date)
+        return '{} and {}'.format(self.meal1, self.meal2)
+
+
