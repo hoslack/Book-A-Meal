@@ -8,7 +8,7 @@ admin = User(name='admin', email='admin@gmail.com', password='1234', admin=True)
 registered_users.append(admin)
 
 
-@app.route('/')
+@app.route('/api/v1/')
 def index():
     """For testing the application on the browser during development"""
     return 'Hello World'
@@ -134,3 +134,18 @@ def get_menu():
         return jsonify({'message': 'Please Login first'})
     result = current_user.get_menu()
     return result
+
+
+@app.route('/api/v1/orders', methods=['POST'])
+def create_order():
+    """A method to create an order by a customer"""
+    current_user = session_user()
+    if not current_user:
+        return jsonify({'message': 'Please Login first'})
+    customer_name = request.form['customer_name']
+    meal_name = request.form['meal_name']
+    meal_price = request.form['meal_price']
+    result = current_user.create_orders(customer_name=customer_name, meal_name=meal_name, meal_price=meal_price)
+    return result
+
+
