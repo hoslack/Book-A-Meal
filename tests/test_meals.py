@@ -1,4 +1,5 @@
 import unittest
+from flask import jsonify
 from app import app
 from app.order.meal import Meal
 
@@ -10,7 +11,7 @@ class TestMeals(unittest.TestCase):
         """Set up reusable data"""
         self.app = app.test_client()
         self.app.testing = True
-        self.meal_data = {'name': 'ugali', 'price': 100}
+        self.meal_data = jsonify({'name': 'ugali', 'price': 100})
         self.meal = Meal(name='ugali', price=100)
 
     def test_meal_creation(self):
@@ -43,7 +44,7 @@ class TestMeals(unittest.TestCase):
         self.assertEqual(result.status_code, 409)
 
     def test_edit_meal_status_code(self):
-        result = self.app.put('/api/v1/meals/<int:id>/', form={'name': 'rice', 'price': 250})
+        result = self.app.put('/api/v1/meals/<int:id>/', form=jsonify({'name': 'rice', 'price': 250}))
         self.assertEqual(result.status_code, 200)
 
     def test_delete_non_existent_meal(self):

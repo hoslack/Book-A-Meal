@@ -1,5 +1,5 @@
 import unittest
-from flask import json
+from flask import jsonify
 from app import app
 from app.order.order import Order
 
@@ -14,7 +14,7 @@ class TestOrders(unittest.TestCase):
         self.customer = 'hoslack'
         self.meal_name = 'ugali'
         self.price = 100
-        self.order_data = {'customer': self.customer, 'meal_name': self.meal_name, 'price': self.price}
+        self.order_data = jsonify({'customer': self.customer, 'meal_name': self.meal_name, 'price': self.price})
         self.order = Order(customer_name=self.customer, meal_name=self.meal_name, price=self.price)
 
     def test_order_creation(self):
@@ -42,11 +42,12 @@ class TestOrders(unittest.TestCase):
 
     def test_edit_order_status_code(self):
         self.app.post('/api/v1/orders/', data=self.order_data)
-        result = self.app.put('/api/v1/orders/<int:id>/', data={'customer': 'hos', 'meal_name': 'fish', 'price': 290})
+        result = self.app.put('/api/v1/orders/<int:id>/', data=jsonify({'customer': 'hos', 'meal_name': 'fish',
+                                                                        'price': 290}))
         self.assertEqual(result.status_code, 200)
 
     def test_edit_non_existent_order(self):
-        result = self.app.put('/api/v1/orders/-134/', data={'customer': 'hos', 'name': 'rice', 'price': 250})
+        result = self.app.put('/api/v1/orders/-134/', data=jsonify({'customer': 'hos', 'name': 'rice', 'price': 250}))
         self.assertEqual(result.status_code, 404)
 
 
