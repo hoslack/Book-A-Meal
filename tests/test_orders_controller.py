@@ -1,8 +1,5 @@
 import unittest
-from app.order.order import Order
-from app.order.meal import Meal
 from app.order.order_controller import OrderController
-from app.order.meal import Meal
 
 
 class TestOrdersController(unittest.TestCase):

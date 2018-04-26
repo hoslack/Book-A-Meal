@@ -59,10 +59,11 @@ def get_meals():
     """A route for getting all the available meals by the admin"""
     current_user = session_user()
     if not current_user:
-        return 'Please Login first'
+        return jsonify({'message': 'Please Login first'})
     if current_user.role != 'admin':
-        return 'Only admin can view the meals'
-    return current_user.meals
+        return jsonify({'message': 'Only admin can view the meals'})
+    meals = current_user.get_meals()
+    return meals
 
 
 @app.route('/api/v1/orders', methods=['GET'])
@@ -70,10 +71,11 @@ def get_orders():
     """A route for getting all the orders by the admin"""
     current_user = session_user()
     if not current_user:
-        return 'Please Login first'
+        return jsonify({'message': 'Please Login first'})
     if current_user.role != 'admin':
-        return 'Only admin can view the orders'
-    return current_user.orders
+        return jsonify({'message': 'Only admin can view the orders'})
+    orders = current_user.get_orders()
+    return orders
 
 
 @app.route('/api/v1/meals', methods=['POST'])
@@ -81,12 +83,13 @@ def add_meal():
     """A route for adding a meal into the application"""
     current_user = session_user()
     if not current_user:
-        return 'Please Login first'
+        return jsonify({'message': 'Please Login first'})
     if current_user.role != 'admin':
-        return 'Only admin can add meals'
+        return jsonify({'message': 'Only admin can view the orders'})
     if not request.form:
-        return 'No data provided '
+        return jsonify({'message': 'No data provided'})
     meal_name = request.form['name']
     meal_price = request.form['price']
     current_user.add_meal(meal_name, meal_price)
-    return 'Meal created successfully'
+    return jsonify({'message': 'Meal created successfully'})
+
