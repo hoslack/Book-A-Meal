@@ -3,11 +3,11 @@ import uuid
 
 
 class MenuItem(object):
-    def __init__(self, meal1, meal2, total_price, item_id=uuid.uuid4()):
+    def __init__(self, meal1, meal2, total_price):
+        self.id = uuid.uuid4()
         self.meal1 = meal1
         self.meal2 = meal2
         self.total_price = total_price
-        self.item_id = item_id
 
     def __repr__(self):
         """Represent the admin using name"""

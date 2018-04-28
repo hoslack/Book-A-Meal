@@ -11,7 +11,7 @@ registered_users.append(admin)
 @app.route('/api/v1/')
 def index():
     """For testing the application on the browser during development"""
-    return 'Hello World'
+    return jsonify({'message': 'This is the home page'})
 
 
 @app.route('/api/v1/auth/signup/', methods=['POST'])
@@ -64,22 +64,10 @@ def session_user():
             return False
 
 
-@app.route('/api/v1/logout/', methods=['POST'])
-def logout():
-    current_user = session_user()
-    if session['user'] and session['user'] == current_user.email:
-        return jsonify({'message': 'You successfully logged out'})
-    return jsonify({'message': 'There is no user in session'})
-
-
 @app.route('/api/v1/meals/', methods=['GET'])
 def get_meals():
     """A route for getting all the available meals by the admin"""
     current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please Login first'})
-    if not current_user.admin:
-        return jsonify({'message': 'Only admin can view the meals'})
     meals = current_user.get_meals()
     return meals
 
@@ -155,10 +143,14 @@ def create_order():
     current_user = session_user()
     if not current_user:
         return jsonify({'message': 'Please Login first'})
-    customer_name = request.form['customer_name']
-    meal_name = request.form['meal_name']
-    meal_price = request.form['meal_price']
-    result = current_user.create_orders(customer_name=customer_name, meal_name=meal_name, meal_price=meal_price)
+    json_data = request.get_json(force=True)
+    if not json_data:
+        return jsonify({'message': 'Please enter all data'})
+    customer_name = session_user().name
+    meal1 = json_data['meal1']
+    meal2 = json_data['meal2']
+    total_price = json_data['total_price']
+    result = current_user.create_orders(customer_name=customer_name, meal1=meal1, meal2=meal2, total_price=total_price)
     return result
 
 
@@ -168,7 +160,8 @@ def update_order(order_id):
     current_user = session_user()
     if not current_user:
         return jsonify({'message': 'Please Login first'})
-    meal_name = request.form['meal_name']
-    meal_price = request.form['meal_price']
-    result = current_user.update_order(order_id=order_id, meal_name=meal_name, meal_price=meal_price)
+    json_data = request.get_json(force=True)
+    meal1 = json_data['meal_name']
+    meal2 = json_data['meal_price']
+    result = current_user.update_order(order_id=order_id, meal1=meal1, meal2=meal2)
     return result
