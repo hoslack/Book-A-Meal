@@ -33,8 +33,3 @@ class TestOrdersController(unittest.TestCase):
         else:
             result = self.controller.update_meal(meal_id=meal_id, meal_name=self.meal_name, meal_price=self.price)
             self.assertEqual(result.status_code, 'Meal does not exist')
-
-
-
-
-

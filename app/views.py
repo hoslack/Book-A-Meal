@@ -18,36 +18,41 @@ def index():
 def signup():
     """A method for creating an account for the user from the json data given"""
 
-    if not request.form:
-        return 'No data received'
-    name = request.form['name']
-    email = request.form['email']
-    password = request.form['password']
+    json_data = request.get_json(force=True)
+    if not json_data:
+        return jsonify({'message': 'Please enter your credentials'}), 400
+    name = json_data['name']
+    email = json_data['email']
+    password = json_data['password']
+    if not name or not email or not password:
+        return jsonify({'message': 'Please enter your credentials'}), 400
     for user in registered_users:
         if user.email == email:
-            return jsonify({'message': 'User exists, log in instead'})
+            return jsonify({'message': 'User exists, log in instead'}), 409
     new_customer = User(name=name, email=email, password=password)
     registered_users.append(new_customer)
-    return jsonify({'message': 'User registration successful'})
+    return jsonify({'message': 'User registration successful'}), 201
 
 
 @app.route('/api/v1/auth/login/', methods=['POST'])
 def login():
     """A method for loging in a user who provides the correct credentials and is registered"""
-    request_data = request.form
-    if not request_data:
-        return 'No data received'
-    email = request.form['email']
-    password = request.form['password']
+    json_data = request.get_json(force=True)
+    if not json_data:
+        return jsonify({'message': 'Please enter your credentials'}), 400
+    email = json_data['email']
+    password = json_data['password']
+    if not email or not password:
+        return jsonify({'message': 'Please enter your credentials'}), 400
     for user in registered_users:
         if user.email == email:
             if user.password == password:
                 session['logged_in'] = True
                 session['user'] = email
-                return jsonify({'message': 'Login successful'})
+                return jsonify({'message': 'Login successful'}), 200
             else:
-                return jsonify({'message': "Wrong Username or Password"})
-    return jsonify({'message': "You are not a registered user. Please register."})
+                return jsonify({'message': "Wrong Email or Password"}), 401
+    return jsonify({'message': "You are not a registered user. Please register"}), 401
 
 
 def session_user():

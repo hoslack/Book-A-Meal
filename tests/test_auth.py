@@ -1,49 +1,65 @@
 import unittest
-from flask import jsonify
+from flask import json
 from app import app
 
 
 class TestAuth(unittest.TestCase):
     """Class for testing all the API endpoints"""
     def setUp(self):
-            """Initializing a test client and making the environment a testing one"""
-            self.app = app.test_client()
-            self.app.testing = True
-
-    def sign_in(self, email='user@gmail.com', password='testpass'):
-        with app.app_context():
-            user_data = jsonify({"email": email, "password": password})
-            return self.app.post('/api/v1/auth/signup/', data=user_data)
-
-    def log_in(self, email='user@gmail.com', password='testpass'):
-        with app.app_context():
-            user_data = jsonify({"email": email, "password": password})
-            return self.app.post('/api/v1/auth/login/', data=user_data)
+        """Initializing a test client and making the environment a testing one"""
+        self.app = app.test_client(self)
+        app.config.testing = True
+        self.user_data = json.dumps({"name": "hoslack", "email": "hos", "password": "hos"})
+        self.login_data = json.dumps({"email": "hos", "password": "hos"})
 
     def test_home_status_code(self):
-        with app.app_context():
-            result = self.app.get('/api/v1/')
-            self.assertEqual(result.status_code, 200)
+        result = self.app.get('/api/v1/')
+        self.assertEqual(result.status_code, 200)
 
-    def test_signin_status_code(self):
-        with app.app_context():
-            result = self.sign_in()
-            self.assertEqual(result.status_code, 200)
+    def test_correct_signup(self):
+        result = self.app.post('/api/v1/auth/signup/', data=self.user_data)
+        self.assertEqual(result.status_code, 201)
+        data = json.loads(result.data)
+        self.assertEqual(data["message"], "User registration successful")
 
-    def test_login_correct_login(self):
-        """test login after signing in"""
-        with app.app_context():
-            self.sign_in()
-            result = self.log_in()
-            self.assertEqual(result.status_code, 200)
-            self.assertIn(b'Success', result.message)
+    def test_signup_without_credentials(self):
+        result = self.app.post('/api/v1/auth/signup/', data=json.dumps({}))
+        self.assertEqual(result.status_code, 400)
+
+    def test_signup_with_same_email(self):
+        self.app.post('/api/v1/auth/signup/', data=self.user_data)
+        result = self.app.post('/api/v1/auth/signup/', data=self.user_data)
+        self.assertEqual(result.status_code, 409)
+        data = json.loads(result.data)
+        self.assertEqual(data["message"], "User exists, log in instead")
+
+    def test_correct_login(self):
+        self.app.post('/api/v1/auth/signup/', data=json.dumps({"name": "hoslack", "email": "hos@hos", "password": "hos"}))
+        result = self.app.post('/api/v1/auth/login/', data=json.dumps({"email": "hos@hos", "password": "hos"}))
+        self.assertEqual(result.status_code, 200)
+        data = json.loads(result.data)
+        self.assertEqual(data["message"], "Login successful")
+
+    def test_login_non_registered_user(self):
+        self.app.post('/api/v1/auth/signup/', data=json.dumps({"name": "hoslack", "email": "hos@hos", "password": "hos"}))
+        result = self.app.post('/api/v1/auth/login/', data=json.dumps({"email": "hoslack", "password": "hos"}))
+        self.assertEqual(result.status_code, 401)
+        data = json.loads(result.data)
+        self.assertEqual(data["message"], "You are not a registered user. Please register")
 
     def test_login_with_wrong_credentials(self):
-        """test successful login"""
-        with app.app_context():
-            self.sign_in()  # must sign in first for successful login
-            result = self.log_in(email='wrong@mail', password='wrongpass')
-            self.assertIn(b'Wrong Username or Password', result.message)
+        self.app.post('/api/v1/auth/signup/', data=json.dumps({"name": "ochieng", "email": "ochi", "password": "ochi"}))
+        result = self.app.post('/api/v1/auth/login/', data=json.dumps({"email": "ochi", "password": "hrk"}))
+        self.assertEqual(result.status_code, 401)
+        data = json.loads(result.data)
+        self.assertEqual(data["message"], "Wrong Email or Password")
+
+    def test_login_without_credentials(self):
+        self.app.post('/api/v1/auth/signup/', data=json.dumps({"name": "hos1", "email": "hos1", "password": "hos1"}))
+        result = self.app.post('/api/v1/auth/login/', data=json.dumps({}))
+        self.assertEqual(result.status_code, 400)
+        data = json.loads(result.data)
+        self.assertEqual(data["message"], "Please enter your credentials")
 
 
 if __name__ == "__main__":

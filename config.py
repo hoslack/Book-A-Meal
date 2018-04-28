@@ -1,7 +1,8 @@
-import os
+# configurations for my app
 
+import uuid
 
-class Config(object):
-    SECRET = os.getenv('SECRET')
-    SESSION_TYPE = os.getenv('SESSION_TYPE')
-
+# Enable Flask's debugging features. Should be False in production
+DEBUG = True
+SESSION_TYPE = 'filesystem'
+SECRET_KEY = str(uuid.uuid4())
