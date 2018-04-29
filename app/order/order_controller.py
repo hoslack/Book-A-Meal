@@ -16,11 +16,12 @@ class OrderController(object):
 
     def add_meal(self, meal_name, meal_price):
         """A method to add a single meal to the application"""
-        if meal_name in self.meals:
-            return jsonify({'message': '{} already exists'.format(meal_name)})
+        for n in self.meals:
+            if meal_name == n.name:
+                return jsonify({'message': '{} already exists'.format(meal_name)})
         new_meal = Meal(name=meal_name, price=meal_price)
         self.meals.append(new_meal)
-        return jsonify({'message': '{} has been added successfully'.format(meal_name)})
+        return jsonify({'message': 'Meal has been added successfully', 'id': new_meal.id})
 
     def update_meal(self, meal_id, meal_name, meal_price):
         """A method for editing an existing meal"""
@@ -46,7 +47,7 @@ class OrderController(object):
         """A method to retrieve and show all the meals in the application"""
         meals = []
         for n in self.meals:
-            meals.append({"meal_id": n.id, "meal_name": n.name, "meal": n.price})
+            meals.append({"meal_id": n.id, "meal_name": n.name, "meal_price": n.price})
         return jsonify({'data': meals})
 
     def create_menu(self, meal1, meal2, total_price):

@@ -1,50 +1,123 @@
-import unittest
-from flask import json
-from app import app
-from app.order.meal import Meal
+
+import pytest
+import json
+import app
 
 
-class TestMeals(unittest.TestCase):
-    """Test the class meals and related endpoints"""
+@pytest.fixture
+def client():
+    """Create a an instance of the application for sending requests"""
+    app.app.config['TESTING'] = True
+    client = app.app.test_client()
 
-    def setUp(self):
-        """Set up reusable data"""
-        self.app = app.test_client()
-        app.testing = True
-        self.meal_data = json.dumps({'name': 'ugali', 'price': 100})
-        self.meal = Meal(name='ugali', price=100)
-
-    def test_get_all_meals_status_code(self):
-        self.app.post('/api/v1/login/', data=json.dumps({"email": "admin@gmail.com", "password": "1234"}))
-        result = self.app.get('/api/v1/meals/')
-        self.assertEqual(result.status_code, 200)
-
-    def test_get_all_meals_has_json(self):
-        result = self.app.get('/api/v1/meals/')
-        self.assertEqual(result.content_type, 'application/json')
-
-    def test_add_meal_status_code(self):
-        result = self.app.post('/api/v1/meals/', data=self.meal_data)
-        self.assertEqual(result.status_code, 201)
-
-    def test_add_meal_without_data(self):
-        result = self.app.post('/api/v1/meals/')
-        self.assertNotEqual(result.status_code, 201)
-
-    def test_duplicate_meal_creation(self):
-        self.app.post('/api/v1/meals', self.meal_data)
-        result = self.app.post('/api/v1/meals/', self.meal_data)
-        self.assertEqual(result.status_code, 409)
-
-    def test_edit_meal_status_code(self):
-        result = self.app.put('/api/v1/meals/<int:id>/', data=json.dumps({'name': 'rice', 'price': 250}))
-        self.assertEqual(result.status_code, 200)
-
-    def test_delete_non_existent_meal(self):
-        """Test for deleting of an id that does not exist"""
-        result = self.app.delete('/api/v1/-234/')
-        self.assertEqual(result.status_code, 404)
+    yield client
 
 
-if __name__ == "__main__":
-    unittest.main()
+def signup(client, name, email, password):
+    """A method to signup the client every time there is a request"""
+    return client.post('/api/v1/auth/signup/', data=json.dumps({"name": name, "email": email, "password": password}))
+
+
+def login(client, email, password):
+    """A method to login the client every time it makes a request"""
+    return client.post('/api/v1/auth/login/', data=json.dumps({"email": email, "password": password}))
+
+
+def test_get_meals_success(client):
+    """Test if admin can get all meals"""
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.get('/api/v1/meals/')
+    assert rv.status_code == 200
+
+
+def test_only_admin_can_get_meals(client):
+    """Test if only the admin can get meals"""
+    signup(client, 'hos', 'hos@gmail.com', '1234')
+    login(client, 'hos@gmail.com', '1234')
+    rv = client.get('/api/v1/meals/')
+    assert rv.status_code == 401
+    json_data = json.loads(rv.data)
+    assert json_data['message'] == 'Please login as admin to perform the operation'
+
+
+def test_add_meal_success(client):
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "rice", "price": 120}))
+    assert rv.status_code == 200
+
+
+def test_only_admin_can_add_meals(client):
+    """Test if only the admin can add meals"""
+    signup(client, 'hos1', 'hos1@gmail.com', '1234')
+    login(client, 'hos1@gmail.com', '1234')
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "kuskus", "price": 250}))
+    assert rv.status_code == 401
+    json_data = json.loads(rv.data)
+    assert json_data['message'] == 'Please login as admin to perform the operation'
+
+
+def test_add_meal_without_data(client):
+    """Test if admin can add meal without data"""
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.post('/api/v1/meals/')
+    assert rv.status_code == 400
+
+
+def test_delete_non_existent_meal(client):
+    """Test in case admin deletes non-existent meal"""
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.delete('/api/v1/meals/-432/')
+    assert rv.status_code == 404
+
+
+def test_delete_meal_success(client):
+    """Test if meal can be deleted successfully"""
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "kuku", "price": 250}))  # create a meal
+    json_data = json.loads(rv.data)
+    meal_id = json_data['id']
+    res = client.delete('/api/v1/meals/{}/'.format(meal_id))
+    assert res.status_code == 200
+
+
+def test_only_admin_can_delete_meals(client):
+    """Test if only the admin can add meals"""
+    signup(client, 'hos1', 'hos1@gmail.com', '1234')
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "fish", "price": 250}))
+    json_data = json.loads(rv.data)
+    meal_id = json_data['id']
+    login(client, 'hos1@gmail.com', '1234')
+    res = client.delete('/api/v1/meals/{}/'.format(meal_id))
+    assert res.status_code == 401
+    json_res = json.loads(res.data)
+    assert json_res['message'] == 'Please login as admin to perform the operation'
+
+
+def test_edit_non_existent_meal(client):
+    """Test for editing a meal that does not exist"""
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.put('/api/v1/meals/-432/', data=json.dumps({"name": "fish fry", "price": 250}))
+    assert rv.status_code == 404
+
+
+def test_edit_meal_success(client):
+    """Test if meal can be edited"""
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "chicken", "price": 250}))  # create a meal
+    json_data = json.loads(rv.data)
+    meal_id = json_data['id']
+    res = client.put('/api/v1/meals/{}/'.format(meal_id), data=json.dumps({"name": "chicken masala", "price": 250}))
+    assert res.status_code == 200
+
+
+def test_only_admin_can_edit_meal(client):
+    """Test only admin is allowed to edit meal"""
+    signup(client, 'hos2', 'hos2@gmail.com', '1234')
+    login(client, 'admin@gmail.com', '1234')
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "chicken tika", "price": 250}))  # create a meal
+    json_data = json.loads(rv.data)
+    meal_id = json_data['id']
+    login(client, 'hos2@gmail.com', '1234')
+    res = client.put('/api/v1/meals/{}/'.format(meal_id), data=json.dumps({"name": "chicken choma", "price": 250}))
+    assert res.status_code == 401
