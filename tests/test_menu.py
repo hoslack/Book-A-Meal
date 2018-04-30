@@ -1,58 +1,38 @@
-import unittest
-from flask import jsonify
-from app import app
+import pytest
+import json
+import app
+
+# Used pytest here to easily manage my session since some of the routes require login
 
 
-class TestMenu(unittest.TestCase):
-    """Test the class menu and related endpoints"""
+@pytest.fixture
+def client():
+    """Create an instance of the application for sending requests"""
+    app.app.config['TESTING'] = True
+    client = app.app.test_client()
 
-    def setUp(self):
-        """Set up reusable data"""
-        self.app = app.test_client()
-        self.app.testing = True
-        self.menu = jsonify(data=[{'name': 'ugali', 'price': 100}, {'name': 'rice', 'price': 150}])
-
-    def test_get_menu(self):
-        with app.app_context():
-            result = self.app.get('/api/v1/menu/')
-            self.assertEqual(result.status_code, 200)
-
-    def test_get_all_menu_has_json(self):
-        with app.app_context():
-            result = self.app.get('/api/v1/menu/')
-            self.assertEqual(result.content_type, 'application/json')
-
-    def test_menu_is_list(self):
-        with app.app_context():
-            result = self.app.get('/api/v1/menu/')
-            self.assertIsInstance(result.data, list)
-
-    def test_add_menu_status_code(self):
-        with app.app_context():
-            result = self.app.post('/api/v1/menu/', data=self.menu)
-            self.assertEqual(result.status_code, 201)
-
-    def test_add_menu_success_response(self):
-        with app.app_context():
-            result = self.app.post('/api/v1/menu/', data=self.menu)
-            self.assertIn(b'Success', result.data)
-
-    def test_add_menu_without_data(self):
-        with app.app_context():
-            result = self.app.post('/api/v1/menu/')
-            self.assertNotEqual(result.status_code, 201)
-
-    def test_duplicate_menu_creation(self):
-        with app.app_context():
-            self.app.post('api/v1/menu/', self.menu)
-            result = self.app.post('/api/v1/menu/', self.menu)
-            self.assertEqual(result.status_code, 409)
-
-    def test_edit_meal_status_code(self):
-        with app.app_context():
-            result = self.app.put('/api/v1/meals/<int:id>/', data=jsonify({'name': 'rice', 'price': 250}))
-            self.assertEqual(result.status_code, 200)
+    yield client
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_get_menu_success(client):
+    """Test if customer can get all meals menu"""
+    rv = client.get('/api/v1/menu/')
+    assert rv.status_code == 200
+
+
+def test_add_meal_to_menu_success(client):
+    rv = client.post('/api/v1/menu/', data=json.dumps({"meal1": "rice", "meal2": "beef", "total_price": 120}))
+    assert rv.status_code == 200
+
+
+def test_add_meal_to_menu_without_data(client):
+    """Test if admin can add meal without data"""
+    rv = client.post('/api/v1/menu/')
+    assert rv.status_code == 400
+
+
+
+
+
+
+

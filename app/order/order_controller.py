@@ -56,13 +56,13 @@ class OrderController(object):
         if item:
             return jsonify({'message': '{} already exists'.format(item)})
         self.menu.append(menu_item)
-        return jsonify({'message': 'Menu Item added successfully'})
+        return jsonify({'message': 'Menu Item added successfully', 'id': menu_item.id})
 
     def create_orders(self, customer_name, meal1, meal2, total_price):
         """A method to create an order, by a customer"""
         order = Order(customer_name=customer_name, meal1=meal1, meal2=meal2, total_price=total_price)
         self.orders.append(order)
-        return jsonify({'message': 'Order added successfully'})
+        return jsonify({'message': 'Order added successfully', 'id':order.id})
 
     def update_order(self, order_id, meal1, meal2, total_price):
         """A method to modify the details of an order already made"""

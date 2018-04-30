@@ -4,6 +4,7 @@ from app.order.order_controller import OrderController
 
 class User(OrderController):
     """This is a super class for a user"""
+
     def __init__(self, name, email, password, admin=False):
         OrderController.__init__(self)
         """Initializing the properties of a user"""
@@ -11,10 +12,3 @@ class User(OrderController):
         self.email = email
         self.password = password
         self.admin = admin
-
-    def __repr__(self):
-        """Represent the user using name"""
-        return '{}'.format(self.name)
-
-
-

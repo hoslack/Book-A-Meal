@@ -1,10 +1,12 @@
-from flask import request, session, jsonify
+from flask import request, jsonify, session
 from app.user.user import User
+from app.order.order_controller import OrderController
 from app import app
 
-
+order_controller = OrderController()
 admin = User(name='admin', email='admin@gmail.com', password='1234', admin=True)
 registered_users = [admin]
+logged_in_user = object
 
 
 @app.route('/api/v1/')
@@ -56,143 +58,89 @@ def login():
     return jsonify({'message': "You are not a registered user. Please register"}), 401
 
 
-def session_user():
-    """Get the current user"""
-    for user in registered_users:
-        if user.email == session['user']:
-            return user
-        else:
-            return False
-
-
 @app.route('/api/v1/meals/', methods=['GET'])
 def get_meals():
     """A route for getting all the available meals by the admin"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    if not current_user.admin:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    meals = current_user.get_meals()
+    meals = order_controller.get_meals()
     return meals
 
 
 @app.route('/api/v1/orders/', methods=['GET'])
 def get_orders():
     """A route for getting all the orders by the admin"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    if not current_user.admin:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    orders = current_user.get_orders()
+    orders = order_controller.get_orders()
     return orders
 
 
 @app.route('/api/v1/meals/', methods=['POST'])
 def add_meal():
     """A route for adding a meal into the application"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    if not current_user.admin:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
     json_data = request.get_json(force=True)
     if not json_data:
         return jsonify({'message': 'No data provided'}), 400
     meal_name = json_data['name']
     meal_price = json_data['price']
-    result = current_user.add_meal(meal_name, meal_price)
+    result = order_controller.add_meal(meal_name, meal_price)
     return result, 200
 
 
 @app.route('/api/v1/meals/<int:meal_id>/', methods=['DELETE'])
 def delete_meal(meal_id):
     """This method removes a meal from the list of available meals"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    if not current_user.admin:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    result = current_user.delete_meal(meal_id=meal_id)
+    result = order_controller.delete_meal(meal_id=meal_id)
     return result
 
 
 @app.route('/api/v1/meals/<int:meal_id>/', methods=['PUT'])
 def update_meal(meal_id):
     """This method updates a meal in the list of available meals"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    if not current_user.admin:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
     json_data = request.get_json(force=True)
     meal_name = json_data['name']
     meal_price = json_data['price']
-    result = current_user.update_meal(meal_id=meal_id, meal_name=meal_name, meal_price=meal_price)
+    result = order_controller.update_meal(meal_id=meal_id, meal_name=meal_name, meal_price=meal_price)
     return result
 
 
 @app.route('/api/v1/menu/', methods=['POST'])
 def create_menu():
     """A method to add a meal option to the menu list by admin"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
-    if not current_user.admin:
-        return jsonify({'message': 'Please login as admin to perform the operation'}), 401
     json_data = request.get_json(force=True)
     if not json_data:
         return jsonify({'message': 'No data provided'})
     meal1 = json_data['meal1']
     meal2 = json_data['meal2']
     total_price = json_data['total_price']
-    result = current_user.create_menu(meal1=meal1, meal2=meal2, total_price=total_price)
+    result = order_controller.create_menu(meal1=meal1, meal2=meal2, total_price=total_price)
     return result
 
 
 @app.route('/api/v1/menu/', methods=['GET'])
 def get_menu():
     """A method that allows an authenticated user to get the menu, list of meal options"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please Login first'}), 401
-    result = current_user.get_menu()
-    return result
+    result = order_controller.get_menu()
+    return result, 200
 
 
 @app.route('/api/v1/orders/', methods=['POST'])
 def create_order():
     """A method to create an order by a customer"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please Login first'}), 401
     json_data = request.get_json(force=True)
     if not json_data:
         return jsonify({'message': 'No data provided'})
-    customer_name = session_user().name
+    customer_name = json_data['customer_name']
     meal1 = json_data['meal1']
     meal2 = json_data['meal2']
     total_price = json_data['total_price']
-    result = current_user.create_orders(customer_name=customer_name, meal1=meal1, meal2=meal2, total_price=total_price)
+    result = order_controller.create_orders(customer_name=customer_name, meal1=meal1, meal2=meal2, total_price=total_price)
     return result
 
 
 @app.route('/api/v1/orders/<int:order_id>/', methods=['PUT'])
 def update_order(order_id):
     """A method to modify an existing order by customer"""
-    current_user = session_user()
-    if not current_user:
-        return jsonify({'message': 'Please Login first'}), 401
     json_data = request.get_json(force=True)
-    meal1 = json_data['meal_name']
-    meal2 = json_data['meal_price']
+    meal1 = json_data['meal1']
+    meal2 = json_data['meal2']
     total_price = json_data['total_price']
-    result = current_user.update_order(order_id=order_id, meal1=meal1, meal2=meal2, total_price=total_price)
+    result = order_controller.update_order(order_id=order_id, meal1=meal1, meal2=meal2, total_price=total_price)
     return result
-
-
-@app.route('/api/v1/logout/', methods=['POST'])
-def logout():
-    session.clear()
-    return jsonify({"message": "Logged out successfully"})
