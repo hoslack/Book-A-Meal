@@ -1,10 +1,12 @@
+# app/__init__.py
+
 from flask import Flask
-from config import Config
 
-app = Flask(__name__)
+# Initialize the app
+app = Flask(__name__, instance_relative_config=True)
 
-"""Load the views- import the views down here to prevent circular import problems"""
+# Load the views
 from app import views
 
-"""Load the config file"""
-app.config.from_object(Config)
+# Load the config file
+app.config.from_object('config')

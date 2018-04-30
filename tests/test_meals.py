@@ -1,50 +1,66 @@
-import unittest
-from app import app
+
+import pytest
+import json
+import app
+
+# Used pytest here to easily manage my session since some of the routes require login
 
 
-class TestMeals(unittest.TestCase):
-    """Test the class meals and related endpoints"""
+@pytest.fixture
+def client():
+    """Create an instance of the application for sending requests"""
+    app.app.config['TESTING'] = True
+    client = app.app.test_client()
 
-    def setUp(self):
-        """Set up reusable data"""
-        self.app = app.test_client()
-        self.app.testing = True
-        self.meal = {'name': 'ugali', 'price': 100}
-
-    def test_get_all_meals_status_code(self):
-        result = self.app.get('/api/v1/meals')
-        self.assertEqual(result.status_code, 200)
-
-    def test_get_all_meals_has_json(self):
-        result = self.app.get('/api/v1/meals')
-        self.assertEqual(result.content_type, 'application/json')
-
-    def test_add_meal_status_code(self):
-        result = self.app.post('/api/v1/meals', data=self.meal)
-        self.assertEqual(result.status_code, 201)
-
-    def test_add_meal_success_response(self):
-        result = self.app.post('/api/v1/meals', data=self.meal)
-        self.assertIn('Success', result)
-
-    def test_add_meal_without_data(self):
-        result = self.app.post('/api/v1/meals')
-        self.assertNotEqual(result.status_code, 201)
-
-    def test_duplicate_meal_creation(self):
-        self.app.post('/api/v1/meals', self.meal)
-        result1 = self.app.post('/api/v1/meals', self.meal)
-        self.assertEqual(result1.status_code, 409)
-
-    def test_edit_meal_status_code(self):
-        result = self.app.put('/api/v1/meals/<int:id>', data={'name': 'rice', 'price': 250})
-        self.assertEqual(result.status_code, 200)
-
-    def test_delete_non_existent_meal(self):
-        """Test for deleting of an id that does not exist"""
-        result = self.app.delete('/api/v1/-234')
-        self.assertEqual(result.status_code, 404)
+    yield client
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_get_meals_success(client):
+    """Test if admin can get all meals"""
+    rv = client.get('/api/v1/meals/')
+    assert rv.status_code == 200
+
+
+def test_add_meal_success(client):
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "rice", "price": 120}))
+    assert rv.status_code == 200
+
+
+def test_add_meal_without_data(client):
+    """Test if admin can add meal without data"""
+    rv = client.post('/api/v1/meals/')
+    assert rv.status_code == 400
+
+
+def test_delete_non_existent_meal(client):
+    """Test in case admin deletes non-existent meal"""
+    rv = client.delete('/api/v1/meals/-432/')
+    assert rv.status_code == 404
+
+
+def test_delete_meal_success(client):
+    """Test if meal can be deleted successfully"""
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "kuku", "price": 250}))  # create a meal
+    json_data = json.loads(rv.data)
+    meal_id = json_data['id']
+    res = client.delete('/api/v1/meals/{}/'.format(meal_id))
+    assert res.status_code == 200
+
+
+def test_edit_non_existent_meal(client):
+    """Test for editing a meal that does not exist"""
+    rv = client.put('/api/v1/meals/-432/', data=json.dumps({"name": "fish fry", "price": 250}))
+    assert rv.status_code == 404
+
+
+def test_edit_meal_success(client):
+    """Test if meal can be edited"""
+    rv = client.post('/api/v1/meals/', data=json.dumps({"name": "chicken", "price": 250}))  # create a meal
+    json_data = json.loads(rv.data)
+    meal_id = json_data['id']
+    res = client.put('/api/v1/meals/{}/'.format(meal_id), data=json.dumps({"name": "chicken masala", "price": 250}))
+    assert res.status_code == 200
+
+
+
+

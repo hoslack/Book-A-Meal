@@ -1,48 +1,51 @@
-import unittest
-from app import app
+
+import pytest
+import json
+import app
+
+# Used pytest here to easily manage my session since some of the routes require login
 
 
-class TestOrders(unittest.TestCase):
-    """Test the class orders and related endpoints"""
+@pytest.fixture
+def client():
+    """Create an instance of the application for sending requests"""
+    app.app.config['TESTING'] = True
+    client = app.app.test_client()
 
-    def setUp(self):
-        """Set up reusable data"""
-        self.app = app.test_client()
-        self.app.testing = True
-        self.order = {'cutomer': 'hoslack', 'name': 'ugali', 'price': 100}
-
-    def test_get_order(self):
-        result = self.app.get('/api/v1/orders')
-        self.assertEqual(result.status_code, 200)
-
-    def test_get_all_orders_has_json(self):
-        result = self.app.get('/api/v1/orders')
-        self.assertEqual(result.content_type, 'application/json')
-
-    def test_orders_is_dict(self):
-        result = self.app.get('/api/v1/orders')
-        self.assertIsInstance(result.data, dict)
-
-    def test_add_order_status_code(self):
-        result = self.app.post('/api/v1/orders', data=self.order)
-        self.assertEqual(result.status_code, 201)
-
-    def test_add_order_success_response(self):
-        result = self.app.post('/api/v1/orders', data=self.order)
-        self.assertIn(b'Success', result.data)
-
-    def test_add_order_without_data(self):
-        result = self.app.post('/api/v1/orders')
-        self.assertNotEqual(result.status_code, 201)
-
-    def test_edit_order_status_code(self):
-        result = self.app.put('/api/v1/orders/<int:id>', data={'customer': 'hos', 'name': 'rice', 'price': 250})
-        self.assertEqual(result.status_code, 200)
-
-    def test_edit_non_existent_order(self):
-        result = self.app.put('/api/v1/orders/-134', data={'customer': 'hos', 'name': 'rice', 'price': 250})
-        self.assertEqual(result.status_code, 404)
+    yield client
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_get_orders_success(client):
+    """Test if admin can get all orders"""
+    rv = client.get('/api/v1/orders/')
+    assert rv.status_code == 200
+
+
+def test_create_order_success(client):
+    rv = client.post('/api/v1/orders/', data=json.dumps({"customer_name": "hoslack", "meal1": "ugali", "meal2": "beef", "total_price": 120}))
+    assert rv.status_code == 200
+
+
+def test_create_order_without_data(client):
+    """Test if customer can create order without data"""
+    rv = client.post('/api/v1/orders/')
+    assert rv.status_code == 400
+
+
+def test_edit_non_existent_order(client):
+    """Test for editing an order that does not exist"""
+    rv = client.put('/api/v1/orders/-432/', data=json.dumps({"customer_name": "hoslack", "meal1": "biryani", "meal2":"beef",
+                                                             "total_price": 120}))
+    assert rv.status_code == 404
+
+
+def test_edit_order_success(client):
+    """Test if meal can be edited"""
+    rv = client.post('/api/v1/orders/', data=json.dumps({"customer_name": "hoslack", "meal1": "biryani", "meal2": "beef",                                                  "total_price": 120}))  # create a meal
+    json_data = json.loads(rv.data)
+    meal_id = json_data['id']
+    res = client.put('/api/v1/orders/{}/'.format(meal_id), data=json.dumps({"customer_name": "hoslack", "meal1": "tender goat",
+                                                                           "meal2": "beef", "total_price": 120}))
+    assert res.status_code == 200
+
+
