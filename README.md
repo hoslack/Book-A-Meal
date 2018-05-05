@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hoslack/Book-A-Meal.svg?branch=master)](https://travis-ci.org/hoslack/Book-A-Meal)
+[![Build Status](https://travis-ci.org/hoslack/Book-A-Meal.svg?branch=develop)](https://travis-ci.org/hoslack/Book-A-Meal)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/763d0acb69e1418ca72d9f7c0e7ad2f5)](https://www.codacy.com/app/hoslack/Book-A-Meal?utm_source=github.com&utm_medium=referral&utm_content=hoslack/Book-A-Meal&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/763d0acb69e1418ca72d9f7c0e7ad2f5)](https://www.codacy.com/app/hoslack/Book-A-Meal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hoslack/Book-A-Meal&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1d4881923768a4d093a0/maintainability)](https://codeclimate.com/github/hoslack/Book-A-Meal/maintainability)
