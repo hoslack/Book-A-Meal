@@ -121,7 +121,7 @@ URL Endpoint	|               HTTP Request   | Resource Accessed | Access Type|
 
 
 ## Contributing
-I appreciate your eagerness to chip in in this wonderful course but you will have to wait for a **month** or two. :blush:
+I appreciate your eagerness to chip in. Please reach out to me here hoslackochieng@gmail.com before you fork it! :blush:
 
 ## Author
 - **Hoslack Ochieng** [@Hoslack](@hoslack)
