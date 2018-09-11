@@ -124,7 +124,7 @@ URL Endpoint	|               HTTP Request   | Resource Accessed | Access Type|
 I appreciate your eagerness to chip in. Please reach out to me here hoslackochieng@gmail.com before you fork it! :blush:
 
 ## Author
-- **Hoslack Ochieng** [@Hoslack](@hoslack)
+- **Hoslack Ochieng** [@Hoslack](https://github.com/hoslack/)
 
 ## Licensing 
 Book-A-Meal is [MIT Licensed](LICENSE.md)
